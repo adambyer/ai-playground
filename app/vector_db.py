@@ -26,12 +26,15 @@ class VectorDB(ABC):
 
     @classmethod
     @abstractmethod
-    async def store_document(cls, embedding: list[float], response: str) -> None:
+    async def store_document(cls, embedding: list[float], content: str) -> None:
         # This needs to be async because it's called in create_task.
         cls.collection.add(
             ids=[str(uuid.uuid4())],
             embeddings=[embedding],
-            metadatas=[{"response": response}],
+            metadatas=[{"content": content}],
+        )
+        LOGGER.info(
+            f"Document stored. Collection count is now  {cls.collection.count()}."
         )
 
     @classmethod
@@ -46,4 +49,4 @@ class VectorDB(ABC):
         if not results["ids"][0] or results["distances"][0][0] > 0.05:
             return None
 
-        return results["metadatas"][0][0]["response"].strip()
+        return results["metadatas"][0][0]["content"].strip()
