@@ -1,5 +1,5 @@
 # Just getting aquainted with various AI concepts
-- Models (Ollama - mistral)
+- Models (Ollama - mistral, all-minilm)
 - Vector Databases (ChromaDB)
     - Generate embeddings
     - Store previous prompts for cached response when prompt is similar

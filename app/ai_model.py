@@ -4,14 +4,17 @@ import logging
 logger = logging.getLogger(__name__)
 
 API_ROOT = "http://localhost:11434/api"
-MODEL_NAME = "mistral"
+CHAT_MODEL = "mistral"
+EMBEDDING_MODEL = "all-minilm"
+
+# TODO: use all-minilm for embeddings, mistral just for chat
 
 
 async def generate_embedding(text: str) -> str:
     logger.info(f"AI MODEL generate_embedding: text: {text}")
     uri = f"{API_ROOT}/embed"
     request_payload = {
-        "model": MODEL_NAME,
+        "model": EMBEDDING_MODEL,
         "input": text,
     }
 
@@ -26,7 +29,7 @@ async def prompt(text: str):
     logger.info("AI MODEL prompt: text: {text}")
     uri = f"{API_ROOT}/generate"
     request_payload = {
-        "model": MODEL_NAME,
+        "model": CHAT_MODEL,
         "prompt": text,
         "stream": True,
     }
