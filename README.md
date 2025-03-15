@@ -1,5 +1,5 @@
 # Just getting aquainted with various AI concepts
-- Models (Ollama)
+- Models (Ollama - mistral)
 - Vector Databases (ChromaDB)
     - Generate embeddings
     - Store previous prompts for cached response when prompt is similar
@@ -19,8 +19,6 @@ $ `pip install -r requirements.txt`
 
 ## Run
 
-$ `ollama run all-minilm`
-
 $ `python3 -m app.main`
 
 ## Usage
@@ -35,3 +33,8 @@ JSON body:
     "prompt": "Who are you?"
 }
 ```
+
+## Cleanup
+Note: Ollama will automatically start/stop models as needed, but you can manually stop with this...
+
+$ `ollama stop mistral`
