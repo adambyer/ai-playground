@@ -6,8 +6,6 @@ logger = logging.getLogger(__name__)
 API_ROOT = "http://localhost:11434/api"
 MODEL_NAME = "mistral"
 
-# TODO: streaming
-
 
 async def generate_embedding(text: str) -> str:
     logger.info(f"AI MODEL generate_embedding: text: {text}")
