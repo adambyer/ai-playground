@@ -20,3 +20,16 @@ $ `pip install -r requirements.txt`
 $ `ollama run all-minilm`
 
 $ `python3 -m app.main`
+
+## Usage
+
+### Chat
+
+GET http://127.0.0.1:8000/chat
+
+JSON body:
+```
+{
+    "prompt": "Who are you?"
+}
+```
