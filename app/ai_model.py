@@ -7,10 +7,8 @@ API_ROOT = "http://localhost:11434/api"
 CHAT_MODEL = "mistral"
 EMBEDDING_MODEL = "all-minilm"
 
-# TODO: use all-minilm for embeddings, mistral just for chat
 
-
-async def generate_embedding(text: str) -> str:
+async def generate_embedding(text: str) -> list[float]:
     logger.info(f"AI MODEL generate_embedding: text: {text}")
     uri = f"{API_ROOT}/embed"
     request_payload = {
