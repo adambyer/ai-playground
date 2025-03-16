@@ -23,9 +23,9 @@ $ `python3 -m app.main`
 
 ## Usage
 
-### Chat
+### Chat Endpoints
 
-GET http://127.0.0.1:8000/chat
+GET /chat
 
 JSON body:
 ```
@@ -33,6 +33,21 @@ JSON body:
     "prompt": "Who are you?"
 }
 ```
+
+### Admin Endpoints
+
+POST /admin/collection/document/add
+
+JSON body:
+```
+{
+    "content": "This is a document"
+}
+```
+
+GET /admin/collection/count
+
+GET /admin/collection/reset
 
 ## Cleanup
 Note: Ollama will automatically start/stop models as needed, but you can manually stop with this...
