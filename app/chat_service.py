@@ -1,25 +1,29 @@
+from abc import ABC, abstractmethod
 import logging
 from .vector_db import VectorDB
-from .ai_model import generate_embedding, generate_response
-
-logger = logging.getLogger(__name__)
+from .ai_model import AiModel
 
 
-async def get_response(text: str):
-    logger.info(f"CHAT SERVICE: text: {text}")
-    # Create embedding for incoming text
-    embedding: list[float] = await generate_embedding(text)
+class ChatService(ABC):
+    logger = logging.getLogger(__name__)
 
-    # Use incoming embedding to check for relevant context documents
-    relevant_documents: list[str] = VectorDB.get_relevant_documentst(embedding)
-    logger.info(f"CHAT SERVICE: relevant_documents: {relevant_documents}")
+    @classmethod
+    @abstractmethod
+    async def get_response(cls, text: str):
+        cls.logger.info(f"CHAT SERVICE: text: {text}")
+        # Create embedding for incoming text
+        embedding: list[float] = await AiModel.generate_embedding(text)
 
-    prompt = f"Prompt: {text}\n\nResponse:"
+        # Use incoming embedding to check for relevant context documents
+        relevant_documents: list[str] = VectorDB.get_relevant_documentst(embedding)
+        cls.logger.info(f"CHAT SERVICE: relevant_documents: {relevant_documents}")
 
-    if relevant_documents:
-        context = "\n".join(relevant_documents)
-        prompt = f"Context: {context}\n\n{prompt}"
+        prompt = f"Prompt: {text}\n\nResponse:"
 
-    logger.info(f"CHAT SERVICE: prompt: {prompt}")
-    async for chunk in generate_response(prompt):
-        yield chunk
+        if relevant_documents:
+            context = "\n".join(relevant_documents)
+            prompt = f"Context: {context}\n\n{prompt}"
+
+        cls.logger.info(f"CHAT SERVICE: prompt: {prompt}")
+        async for chunk in AiModel.generate_response(prompt):
+            yield chunk

@@ -56,7 +56,7 @@ class VectorDB(ABC):
                 distance,
                 results["metadatas"][0][i][CONTENT_KEY].strip(),
             )
-            if distance < 0.4:
+            if distance < 0.6:
                 relevant_documents.append(
                     results["metadatas"][0][i][CONTENT_KEY].strip()
                 )
