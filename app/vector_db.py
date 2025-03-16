@@ -4,6 +4,7 @@ from abc import ABC, abstractmethod
 from chromadb import PersistentClient, ClientAPI, Collection
 
 LOGGER = logging.getLogger(__name__)
+CONTENT_KEY = "content"
 
 
 class VectorDB(ABC):
@@ -31,7 +32,7 @@ class VectorDB(ABC):
         cls.collection.add(
             ids=[str(uuid.uuid4())],
             embeddings=[embedding],
-            metadatas=[{"content": content}],
+            metadatas=[{CONTENT_KEY: content}],
         )
         LOGGER.info(
             f"Document stored. Collection count is now  {cls.collection.count()}."
@@ -39,14 +40,25 @@ class VectorDB(ABC):
 
     @classmethod
     @abstractmethod
-    def get_document(cls, embedding: list[float]) -> str | None:
+    def get_relevant_documentst(cls, embedding: list[float]) -> list[str]:
         results = cls.collection.query(
             query_embeddings=[embedding],
-            n_results=1,
+            n_results=10,
         )
 
-        # We always get the closest match but it still might not be relevant so we check the distance.
-        if not results["ids"][0] or results["distances"][0][0] > 0.05:
-            return None
+        relevant_documents = []
 
-        return results["metadatas"][0][0]["content"].strip()
+        # We only searched for one embedding, so we're getting back a list with one entry.
+        # The entry is also a list - of distances for each document.
+        for i, distance in enumerate(results["distances"][0]):
+            print(
+                "*** distance: ",
+                distance,
+                results["metadatas"][0][i][CONTENT_KEY].strip(),
+            )
+            if distance < 0.4:
+                relevant_documents.append(
+                    results["metadatas"][0][i][CONTENT_KEY].strip()
+                )
+
+        return relevant_documents

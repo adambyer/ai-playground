@@ -23,7 +23,7 @@ async def generate_embedding(text: str) -> list[float]:
     return response_payload["embeddings"][0]
 
 
-async def prompt(text: str):
+async def generate_response(text: str):
     logger.info("AI MODEL prompt: text: {text}")
     uri = f"{API_ROOT}/generate"
     request_payload = {

@@ -1,7 +1,6 @@
-import asyncio
 import logging
 from .vector_db import VectorDB
-from .ai_model import generate_embedding, prompt
+from .ai_model import generate_embedding, generate_response
 
 logger = logging.getLogger(__name__)
 
@@ -10,24 +9,17 @@ async def get_response(text: str):
     logger.info(f"CHAT SERVICE: text: {text}")
     # Create embedding for incoming text
     embedding: list[float] = await generate_embedding(text)
-    logger.info(f"CHAT SERVICE: embedding: {len(embedding)}")
 
-    # Use incoming embedding to check for cached response
-    response: str | None = VectorDB.get_document(embedding)
+    # Use incoming embedding to check for relevant context documents
+    relevant_documents: list[str] = VectorDB.get_relevant_documentst(embedding)
+    logger.info(f"CHAT SERVICE: relevant_documents: {relevant_documents}")
 
-    if response:
-        logger.info("CHAT SERVICE: cached response: {response}")
-        yield response.encode()
-        return
+    prompt = f"Prompt: {text}\n\nResponse:"
 
-    # No cached response. Generate one from the model.
-    response: str = ""
+    if relevant_documents:
+        context = "\n".join(relevant_documents)
+        prompt = f"Context: {context}\n\n{prompt}"
 
-    async for chunk in prompt(text):
-        response += chunk
+    logger.info(f"CHAT SERVICE: prompt: {prompt}")
+    async for chunk in generate_response(prompt):
         yield chunk
-
-    logger.info("CHAT SERVICE: non-cached response: {response}")
-
-    # Offload saving of the new embedding
-    asyncio.create_task(VectorDB.store_document(embedding, response))
