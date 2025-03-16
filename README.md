@@ -1,8 +1,10 @@
 # Just getting aquainted with various AI concepts
-- Models (Ollama - mistral, all-minilm)
+- Models
+    - Ollama - mistral for chat
+    - Ollama - all-minilm for embeddings
 - Vector Databases (ChromaDB)
     - Generate embeddings
-    - Store previous prompts for cached response when prompt is similar
+    - Store relevant documents for RAG (retrieval augmented generation)
 
 ## Setup
 
