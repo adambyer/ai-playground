@@ -5,7 +5,7 @@ import logging
 
 class AiModel(ABC):
     logger = logging.getLogger(__name__)
-    api_root = "http://localhost:11434/api"
+    api_root = "http://ollama:11434/api"
     chat_model = "mistral"
     embedding_model = "all-minilm"
 

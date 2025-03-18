@@ -1,0 +1,29 @@
+services:
+  ollama:
+    build:
+      context: .
+      dockerfile: Dockerfile.ollama
+    container_name: ollama
+    restart: always
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama:/root/.ollama
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.app
+    depends_on:
+      - ollama
+    ports:
+      - "8000:8000"
+    volumes:
+      # Bind mount the hosts current folder to container folder. Allows for syncing changes without rebuild.
+      - .:/app
+
+    # TODO: separate compose file for local dev (for hot reloading)
+    entrypoint: [ "uvicorn", "app.main:app", "--reload", "--host", "0.0.0.0", "--port", "8000" ]
+
+volumes:
+  ollama:

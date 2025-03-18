@@ -2,7 +2,7 @@ import logging
 import uvicorn
 
 from fastapi import FastAPI, status
-from fastapi.responses import Response
+from fastapi.responses import Response, JSONResponse
 
 from .routers import chat, admin
 
@@ -18,7 +18,7 @@ app.include_router(chat.router)
 @app.get("/healthcheck")
 async def healthcheck():
     logger.info("ENDPOINT: /healthcheck")
-    return Response(status_code=status.HTTP_200_OK)
+    return JSONResponse({"status": "UP"}, status_code=status.HTTP_200_OK)
 
 
 if __name__ == "__main__":

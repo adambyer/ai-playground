@@ -1,0 +1,8 @@
+FROM ollama/ollama:latest
+
+WORKDIR /app
+
+COPY ollama_setup.sh /app/ollama_setup.sh
+RUN chmod +x /app/ollama_setup.sh  # Ensure it is executable
+
+ENTRYPOINT ["/app/ollama_setup.sh"]
