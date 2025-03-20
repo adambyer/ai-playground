@@ -1,8 +1,11 @@
 import logging
 import uvicorn
 
+from dotenv import load_dotenv
 from fastapi import FastAPI, status
 from fastapi.responses import Response, JSONResponse
+
+load_dotenv()
 
 from .routers import chat, admin
 

@@ -1,4 +1,6 @@
 __pycache__
 *.code-workspace
-venv
-chroma_db
+/venv
+/chroma_db
+/infra
+.env
