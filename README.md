@@ -53,6 +53,12 @@ $ `kubectl get svc`
 
 ## Un-deploy
 
+$ `kubectl delete svc --all`
+
+$ `kubectl delete deployment --all`
+
+Wait a few minutes, then...
+
 $ `cd infra`
 
 $ `terraform destroy`

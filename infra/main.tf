@@ -59,7 +59,8 @@ resource "aws_ecr_repository" "app_repository" {
   image_scanning_configuration {
     scan_on_push = true
   }
-  tags = local.common_tags
+  tags         = local.common_tags
+  force_delete = true
 }
 
 resource "aws_ecr_repository" "ollama_repository" {
@@ -67,5 +68,6 @@ resource "aws_ecr_repository" "ollama_repository" {
   image_scanning_configuration {
     scan_on_push = true
   }
-  tags = local.common_tags
+  tags         = local.common_tags
+  force_delete = true
 }
