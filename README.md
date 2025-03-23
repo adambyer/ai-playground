@@ -10,14 +10,13 @@
 
 $ `docker compose up`
 
-Endpoints are accessible at http://0.0.0.0:8000.
+Endpoints are accessible at http://0.0.0.0:8000
 
 ## Usage
 
 ### Chat Endpoints
 
 GET /chat
-
 JSON body:
 ```
 {
@@ -27,8 +26,7 @@ JSON body:
 
 ### Admin Endpoints
 
-POST /admin/collection/document/add
-
+POST /admin/collection/document/add  
 JSON body:
 ```
 {
@@ -39,3 +37,22 @@ JSON body:
 GET /admin/collection/count
 
 GET /admin/collection/reset
+
+## Deploy
+
+$ `cd infra`
+
+$ `terraform apply`
+
+$ `cd ../`
+
+$ `./deploy.sh`
+
+Get app URI:  
+$ `kubectl get svc`
+
+## Un-deploy
+
+$ `cd infra`
+
+$ `terraform destroy`

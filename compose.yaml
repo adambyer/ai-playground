@@ -1,5 +1,5 @@
 services:
-  ai-model:
+  ollama:
     build:
       context: .
       dockerfile: Dockerfile.ollama
@@ -14,7 +14,7 @@ services:
       context: .
       dockerfile: Dockerfile.app
     depends_on:
-      - ai-model
+      - ollama
     ports:
       - "8000:8000"
     volumes:

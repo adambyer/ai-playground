@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-playground-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ai-playground-app
+  template:
+    metadata:
+      labels:
+        app: ai-playground-app
+    spec:
+      containers:
+      - name: ai-playground-app
+        image: ${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/ai-playground-app:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+        env:
+        - name: AI_MODEL_ROOT
+          value: "ai-playground-ollama"

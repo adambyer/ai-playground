@@ -6,7 +6,7 @@ import os
 
 class AiModel(ABC):
     logger = logging.getLogger(__name__)
-    api_root = f"http://{os.getenv('AI_MODEL_ROOT', 'ai-playground-model')}:11434/api"
+    api_root = f"http://{os.getenv('AI_MODEL_ROOT')}:11434/api"
     chat_model = "mistral"
     embedding_model = "all-minilm"
 
