@@ -1,24 +1,27 @@
 import logging
 import uuid
-from abc import ABC, abstractmethod
 from chromadb import PersistentClient, ClientAPI, Collection
 
 LOGGER = logging.getLogger(__name__)
 CONTENT_KEY = "content"
 
+# This class demonstrates usage of ChromaDB via it's library.
+# For working with ChromaDB via Langchain, see vector_store.py.
 
-class VectorDB(ABC):
+
+class VectorDB:
     client: ClientAPI = PersistentClient(path="./chroma_db")
     collection_name = "chat_cache"
     collection: Collection = client.get_or_create_collection(collection_name)
 
+    def __init__(self):
+        raise TypeError("ChatService is a utility class and cannot be instantiated.")
+
     @classmethod
-    @abstractmethod
     def get_collection_count(cls) -> None:
         return cls.collection.count()
 
     @classmethod
-    @abstractmethod
     def reset_collection(cls) -> None:
         LOGGER.info(f"Deleting collection with {cls.collection.count()} items.")
         cls.client.delete_collection(cls.collection_name)
@@ -26,7 +29,6 @@ class VectorDB(ABC):
         LOGGER.info(f"New collection created with {cls.collection.count()} items.")
 
     @classmethod
-    @abstractmethod
     async def store_document(cls, embedding: list[float], content: str) -> None:
         # This needs to be async because it's called in create_task.
         cls.collection.add(
@@ -39,7 +41,6 @@ class VectorDB(ABC):
         )
 
     @classmethod
-    @abstractmethod
     def get_relevant_documentst(cls, embedding: list[float]) -> list[str]:
         results = cls.collection.query(
             query_embeddings=[embedding],

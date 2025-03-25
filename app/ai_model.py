@@ -1,17 +1,18 @@
-from abc import ABC, abstractmethod
 import aiohttp
 import logging
 import os
 
 
-class AiModel(ABC):
+class AiModel:
     logger = logging.getLogger(__name__)
     api_root = f"http://{os.getenv('AI_MODEL_ROOT')}:11434/api"
     chat_model = "mistral"
     embedding_model = "all-minilm"
 
+    def __init__(self):
+        raise TypeError("AiModel is a utility class and cannot be instantiated.")
+
     @classmethod
-    @abstractmethod
     async def generate_embedding(cls, text: str) -> list[float]:
         cls.logger.info(f"AI MODEL generate_embedding: text: {text}")
         uri = f"{cls.api_root}/embed"
@@ -27,7 +28,6 @@ class AiModel(ABC):
         return response_payload["embeddings"][0]
 
     @classmethod
-    @abstractmethod
     async def generate_response(cls, text: str):
         cls.logger.info("AI MODEL prompt: text: {text}")
         uri = f"{cls.api_root}/generate"

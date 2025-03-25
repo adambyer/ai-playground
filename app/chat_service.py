@@ -1,14 +1,15 @@
-from abc import ABC, abstractmethod
 import logging
 from .vector_db import VectorDB
 from .ai_model import AiModel
 
 
-class ChatService(ABC):
+class ChatService:
     logger = logging.getLogger(__name__)
 
+    def __init__(self):
+        raise TypeError("ChatService is a utility class and cannot be instantiated.")
+
     @classmethod
-    @abstractmethod
     async def get_response(cls, text: str):
         cls.logger.info(f"CHAT SERVICE: text: {text}")
         # Create embedding for incoming text
