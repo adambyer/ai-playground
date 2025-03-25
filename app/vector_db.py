@@ -15,7 +15,7 @@ class VectorDB:
     collection: Collection = client.get_or_create_collection(collection_name)
 
     def __init__(self):
-        raise TypeError("ChatService is a utility class and cannot be instantiated.")
+        raise TypeError("VectorDB is a utility class and cannot be instantiated.")
 
     @classmethod
     def get_collection_count(cls) -> None:
