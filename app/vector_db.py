@@ -2,7 +2,7 @@ import logging
 import uuid
 from chromadb import PersistentClient, ClientAPI, Collection
 
-LOGGER = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 CONTENT_KEY = "content"
 
 # This class demonstrates usage of ChromaDB via it's library.
@@ -23,20 +23,19 @@ class VectorDB:
 
     @classmethod
     def reset_collection(cls) -> None:
-        LOGGER.info(f"Deleting collection with {cls.collection.count()} items.")
+        logger.info(f"Deleting collection with {cls.collection.count()} items.")
         cls.client.delete_collection(cls.collection_name)
         cls.collection = cls.client.create_collection(cls.collection_name)
-        LOGGER.info(f"New collection created with {cls.collection.count()} items.")
+        logger.info(f"New collection created with {cls.collection.count()} items.")
 
     @classmethod
-    async def store_document(cls, embedding: list[float], content: str) -> None:
-        # This needs to be async because it's called in create_task.
+    def store_document(cls, embedding: list[float], content: str) -> None:
         cls.collection.add(
             ids=[str(uuid.uuid4())],
             embeddings=[embedding],
             metadatas=[{CONTENT_KEY: content}],
         )
-        LOGGER.info(
+        logger.info(
             f"Document stored. Collection count is now  {cls.collection.count()}."
         )
 
@@ -52,11 +51,6 @@ class VectorDB:
         # We only searched for one embedding, so we're getting back a list with one entry.
         # The entry is also a list - of distances for each document.
         for i, distance in enumerate(results["distances"][0]):
-            print(
-                "*** distance: ",
-                distance,
-                results["metadatas"][0][i][CONTENT_KEY].strip(),
-            )
             if distance < 1.0:
                 relevant_documents.append(
                     results["metadatas"][0][i][CONTENT_KEY].strip()

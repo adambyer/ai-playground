@@ -2,10 +2,11 @@ import aiohttp
 import logging
 import os
 
+logger = logging.getLogger(__name__)
 
-class AiModel:
-    logger = logging.getLogger(__name__)
-    api_root = f"http://{os.getenv('AI_MODEL_ROOT')}:11434/api"
+
+class AIModel:
+    api_root = f"http://{os.getenv('OLLAMA_ROOT')}:11434/api"
     chat_model = "mistral"
     embedding_model = "all-minilm"
 
@@ -28,12 +29,12 @@ class AiModel:
         return response_payload["embeddings"][0]
 
     @classmethod
-    async def generate_response(cls, text: str):
-        cls.logger.info("AI MODEL prompt: text: {text}")
+    async def generate_response(cls, prompt: str):
+        cls.logger.info("AI MODEL prompt: {prompt}")
         uri = f"{cls.api_root}/generate"
         request_payload = {
             "model": cls.chat_model,
-            "prompt": text,
+            "prompt": prompt,
             "stream": True,
         }
 

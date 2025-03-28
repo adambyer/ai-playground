@@ -19,5 +19,5 @@ spec:
         ports:
         - containerPort: 8000
         env:
-        - name: AI_MODEL_ROOT
+        - name: OLLAMA_ROOT
           value: "ai-playground-ollama"

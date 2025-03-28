@@ -1,0 +1,10 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.app
+    ports:
+      - "8000:8000"
+    volumes:
+      # Bind mount the hosts current folder to container folder. Allows for syncing changes without rebuild.
+      - .:/app

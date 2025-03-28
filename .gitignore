@@ -2,7 +2,9 @@ __pycache__
 *.code-workspace
 /venv
 /chroma_db
+/chroma_db_langchain
 .env
 /infra/.terraform
 .terraform.*
 terraform.*
+*.sqlite3

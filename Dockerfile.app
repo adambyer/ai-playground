@@ -11,4 +11,5 @@ COPY . /app
 EXPOSE 8000
 
 # TODO: separate compose file for local dev (for hot reloading)
-ENTRYPOINT [ "uvicorn", "app.main:app", "--reload", "--host", "0.0.0.0", "--port", "8000" ]
+# --env-file .env makes uvicorn auto load env vars so that load_dotenv() is not needed
+ENTRYPOINT [ "uvicorn", "app.main:app", "--env-file", ".env", "--reload", "--host", "0.0.0.0", "--port", "8000" ]
