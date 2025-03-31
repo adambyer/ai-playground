@@ -7,7 +7,7 @@ from .chat_agent import ChatAgent
 logger = logging.getLogger(__name__)
 
 
-class ChatService:
+class ChatHandler:
     def __init__(self):
         raise TypeError("ChatService is a utility class and cannot be instantiated.")
 
