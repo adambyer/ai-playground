@@ -1,9 +1,7 @@
 from typing import Sequence
 from langchain.chat_models import init_chat_model
-from langchain_community.tools.tavily_search import TavilySearchResults
 from langchain_core.messages import HumanMessage, BaseMessage, trim_messages
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langgraph.prebuilt import create_react_agent
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.graph import START, StateGraph
 from langgraph.graph.message import add_messages
@@ -45,6 +43,9 @@ class ChatService(metaclass=ChatServiceMeta):
         )
     )
     app = None
+
+    def __init__(self):
+        raise TypeError("ChatService is a utility class and cannot be instantiated.")
 
     @classmethod
     def _setup(cls):

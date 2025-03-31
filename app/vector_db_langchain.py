@@ -25,6 +25,11 @@ class VectorDBLangChain:
         separators=["\n\n", "\n", ".", " ", ""],
     )
 
+    def __init__(self):
+        raise TypeError(
+            "VectorDBLangChain is a utility class and cannot be instantiated."
+        )
+
     @classmethod
     def add_document_from_file(cls, file_path: str):
         logger.info("VectorDBLangChain: Add Document from File")

@@ -6,7 +6,7 @@ class ChatRequest(BaseModel):
     language: str = "english"
 
 
-class ChatResponseAgent(BaseModel):
+class ChatResponse(BaseModel):
     response: str
 
 
