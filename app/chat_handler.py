@@ -2,7 +2,7 @@ import logging
 from .vector_db import VectorDB
 from .ai_model import AIModel
 from .deprecated.chat_agent import ChatAgent as ChatAgentDeprecated
-from .chat_agent import ChatAgent
+from .chat_service import ChatService
 
 logger = logging.getLogger(__name__)
 
@@ -38,5 +38,5 @@ class ChatHandler:
 
     @classmethod
     async def get_response_from_agent(cls, prompt: str, language: str):
-        response = await ChatAgent.generate_response(prompt, language)
+        response = await ChatService.generate_response(prompt, language)
         return response

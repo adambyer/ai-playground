@@ -10,7 +10,7 @@ from langgraph.graph.message import add_messages
 from typing_extensions import Annotated, TypedDict
 
 
-class ChatAgentMeta(type):
+class ChatServiceMeta(type):
     def __init__(cls, *args, **kwargs):
         super().__init__(*args, **kwargs)
         cls._initialized = False
@@ -22,10 +22,8 @@ class MessageState(TypedDict):
     language: str
 
 
-class ChatAgent(metaclass=ChatAgentMeta):
+class ChatService(metaclass=ChatServiceMeta):
     model = init_chat_model("claude-3-5-haiku-latest", model_provider="anthropic")
-    search = TavilySearchResults(max_results=2)
-    agent_executor = create_react_agent(model, [search])
     graph = StateGraph(state_schema=MessageState)
     prompt_template = ChatPromptTemplate.from_messages(
         [
