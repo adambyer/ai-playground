@@ -1,7 +1,7 @@
 from typing import Sequence
 from langchain.chat_models import init_chat_model
 from langchain_community.tools.tavily_search import TavilySearchResults
-from langchain_core.messages import HumanMessage, BaseMessage
+from langchain_core.messages import HumanMessage, BaseMessage, trim_messages
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langgraph.prebuilt import create_react_agent
 from langgraph.checkpoint.memory import MemorySaver
@@ -36,6 +36,16 @@ class ChatAgent(metaclass=ChatAgentMeta):
             MessagesPlaceholder(variable_name="messages"),
         ]
     )
+    message_trimmmer = (
+        trim_messages(  # This is used to reduce the messages we send back to the model.
+            max_tokens=500,
+            strategy="last",
+            token_counter=model,
+            include_system=True,
+            allow_partial=False,
+            start_on="human",
+        )
+    )
     app = None
 
     @classmethod
@@ -56,6 +66,9 @@ class ChatAgent(metaclass=ChatAgentMeta):
 
     @classmethod
     async def _call_model(cls, state: MessageState) -> dict[str, BaseMessage]:
+        # Remove old messages before sending to the model
+        messages = await cls.message_trimmmer.ainvoke(state["messages"])
+        state = MessageState(messages=messages, language=state["language"])
         prompt = await cls.prompt_template.ainvoke(state)
         response = await cls.model.ainvoke(prompt)
         return {"messages": response}
