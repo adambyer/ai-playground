@@ -3,9 +3,7 @@ import os
 from langchain_ollama import OllamaLLM
 from langchain.chains.retrieval_qa.base import RetrievalQA
 
-from .vector_db_langchain import VectorDBLangChain
-
-print("*** os.getenv('OLLAMA_ROOT')", os.getenv("OLLAMA_ROOT"))
+from ..vector_db_langchain import VectorDBLangChain
 
 
 class AIModelLangChain:

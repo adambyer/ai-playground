@@ -3,9 +3,10 @@ from pydantic import BaseModel
 
 class ChatRequest(BaseModel):
     prompt: str
+    language: str = "english"
 
 
-class ChatResponseLangChain(BaseModel):
+class ChatResponseAgent(BaseModel):
     response: str
 
 
