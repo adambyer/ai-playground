@@ -1,11 +1,8 @@
 # Just getting aquainted with various AI concepts
-- Models
-    - Ollama - mistral for chat
-    - Ollama - all-minilm for embeddings
-- Vector Databases (ChromaDB)
-    - Generate embeddings
-    - Store relevant documents for RAG (retrieval augmented generation)
-- LangChain agents
+- Models from Anthropic, Ollama, OpenAI
+- Vector Databases: ChromaDB
+- RAG (retrieval augmented generation)
+- LangChain
 
 ## Setup
 Create a `.env` file in the root with:
